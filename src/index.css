@@ -26,3 +26,12 @@ code {
   white-space: pre-line;  
   vertical-align: bottom;
 }
+
+.checkbox-container{
+  background-color: white;
+}
+
+.checkbox-form > label{
+  display: flex;
+  flex-direction: column;
+}

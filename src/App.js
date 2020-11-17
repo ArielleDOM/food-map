@@ -4,8 +4,11 @@ import groceryIcon from './images/grocery.svg'
 import greenIcon from './images/green.svg'
 import soupIcon from './images/soup.svg'
 import grabIcon from './images/grab.svg'
+import foodPantryIcon from './images/foodpantry.svg'
 import './App.css';
-import * as foodData from "./test-data.json"
+import { useForm } from "react-hook-form";
+import * as foodData from "./food-map-data.json"
+import CheckboxMenu from './Checkbox'
 
 
 function App() {
@@ -17,33 +20,85 @@ function App() {
     zoom: 13,
   })
 
-  const [selectedFood, setSelectedFood] = useState(null)
-  useEffect(() => {
-    const listner = (e) => {
-      if(e.key === "Escape") setSelectedFood(null)
-    }
-    
-    window.addEventListener("keydown", listner)
+  const [state, setState] = useState({
+    free: true,
+    $: true,
+    $$: true,
+    $$$: true,
+    status: false,
+    Greenmarket: true,
+    Grocery: true,
+    GrabAndGo: true,
+    FoodPantry: true,
+    SoupKitchen: true,
+  })
 
-    return () => {
-      window.removeEventListener('keydown', listner)
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      free: true,
+      $: true,
+      $$: true,
+      $$$: true,
+      status: false,
+      Greenmarket: true,
+      Grocery: true,
+      GrabAndGo: true,
+      FoodPantry: true,
+      SoupKitchen: true
     }
-  }, [])
+});
+
+  const onSubmit = data => {
+    setState({
+      free: data.free,
+      $: data.$,
+      $$: data.$$,
+      $$$: data.$$$,
+      status: data.status,
+      Greenmarket: data.Greenmarket,
+      Grocery: data.Grocery,
+      GrabAndGo: data.GrabAndGo,
+      FoodPantry: data.FoodPantry,
+      SoupKitchen: data.SoupKitchen,})
+  };
+
+
+  const [selectedFood, setSelectedFood] = useState(null)
+  
+  useEffect(() => {
+      const listner = (e) => {
+        if(e.key === "Escape") setSelectedFood(null)
+      }
+
+      window.addEventListener("keydown", listner)
+
+      return () => {
+        window.removeEventListener('keydown', listner)
+      }
+    }, [])
+
   const getCord = (str) =>{
     return JSON.parse(str)
   }
 
   const getIcon = (type) => {
     let icon;
-    if(type === "Grocery Store") icon = groceryIcon
-    if(type === "Grab & Go Meals (NYC Schools)") icon = grabIcon
-    if(type === "Greenmarket/Farm stand/Fresh Food box") icon = greenIcon
-    if(type === "Soup Kitchen/Mobile Soup Kitchen") icon = soupIcon
+    if(type === "Grocery") icon = groceryIcon
+    if(type === "GrabAndGo") icon = grabIcon
+    if(type === "Greenmarket") icon = greenIcon
+    if(type === "SoupKitchen") icon = soupIcon
+    if(type === "FoodPantry") icon = foodPantryIcon
     return icon
   }
 
-  const hideOrShow = (status) => {
-    if(status === "NULL") return "none"
+  const hideOrShow = (type, cost, status) => {
+    status = JSON.parse(status)
+    if(state.status && !status) return 'none'
+    if(cost === 'FREE' && !state.free) return 'none'
+    if(cost === '$' && !state.$) return 'none'
+    if(cost === '$$' && !state.$$) return 'none'
+    if(cost === '$$$' && !state.$$$) return 'none'
+    if(!state[type]) return "none"
     else return "block"
   }
 
@@ -56,9 +111,16 @@ function App() {
         setViewport(viewport)
       }}
       >
+        <CheckboxMenu register = {register} handleSubmit = {handleSubmit} onSubmit = {onSubmit}></CheckboxMenu>
+
         {foodData.map((food, index) => (
-          <Marker key = {index} latitude = {getCord(food.location)[0]} longitude = {getCord(food.location)[1]}>
-            <button className = "marker-btn" onClick = {e => {
+          <Marker
+          key = {index}
+          latitude = {getCord(food.location)[0]} 
+          longitude = {getCord(food.location)[1]}>
+            <button 
+              style = {{display: hideOrShow(food.type, food.cost, food.status)}}
+              className = "marker-btn" onClick = {e => {
               e.preventDefault()
               setSelectedFood(food)
             }}>
@@ -76,8 +138,12 @@ function App() {
           >
             <div className = "pop-container">
               <div className = 'pop-header'>{selectedFood.name}</div>
-              <div className = 'pop-description'>{selectedFood.description}</div>
-              <div className = 'pop-cost' style = {{display: hideOrShow(selectedFood.cost)}}>Cost: {selectedFood.cost}</div>
+              <br></br>
+              <div className = 'pop-description'>{selectedFood.description}</div> 
+              <br></br>
+              <div className = 'pop-address'>Location: {selectedFood.address}</div>
+              <br></br>
+              <div className = 'pop-cost'>Cost: {selectedFood.cost}</div>
             </div>
           </Popup>
         ) : null}
