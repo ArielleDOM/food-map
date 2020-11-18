@@ -1,5 +1,4 @@
 import React from "react";
-// import { useForm } from "react-hook-form";
 
 export default function CheckboxMenu(props) {
 
@@ -61,6 +60,7 @@ export default function CheckboxMenu(props) {
 
         <button type="submit">Submit</button>
         </form>
+        
     </div>
   );
 }

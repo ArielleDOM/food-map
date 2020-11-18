@@ -8,17 +8,21 @@ import foodPantryIcon from './images/foodpantry.svg'
 import './App.css';
 import { useForm } from "react-hook-form";
 import * as foodData from "./food-map-data.json"
+import SearchBox from "./SearchBox"
 import CheckboxMenu from './Checkbox'
 
 
 function App() {
 
+  const mapStyles = {
+    width: '100vw',
+    height:'100vh',
+  }
+
   const [viewport, setViewport] = useState({
     latitude: 40.7127281,
     longitude: -74.0060152,
-    width: '100vw',
-    height:'100vh',
-    zoom: 13,
+    zoom: 12.5,
   })
 
   const [state, setState] = useState({
@@ -60,7 +64,8 @@ function App() {
       Grocery: data.Grocery,
       GrabAndGo: data.GrabAndGo,
       FoodPantry: data.FoodPantry,
-      SoupKitchen: data.SoupKitchen,})
+      SoupKitchen: data.SoupKitchen
+    })
   };
 
   const [selectedFood, setSelectedFood] = useState(null)
@@ -75,7 +80,7 @@ function App() {
       return () => {
         window.removeEventListener('keydown', listner)
       }
-    }, [])
+  }, [])
 
   const getCord = (str) =>{
     return JSON.parse(str)
@@ -104,17 +109,21 @@ function App() {
 
   return (
     <div className="App">
-      <ReactMapGL {...viewport} 
+      <ReactMapGL {...viewport} {...mapStyles}
         mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle = "mapbox://styles/arielledom/ckhjzdaiy06z419nugsckawxn"
         onViewportChange = {(viewport) => {
-        setViewport(viewport)
-      }}>
+        setViewport(viewport)}}>
+      
+        <SearchBox 
+          viewport = {viewport} 
+          setViewport = {setViewport}/>
 
         <CheckboxMenu 
           register = {register} 
           handleSubmit = {handleSubmit} 
           onSubmit = {onSubmit}/>
+
 
         {foodData.map((food, index) => (
           <Marker
