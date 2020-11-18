@@ -22,7 +22,13 @@ code {
   width: 25px;
   height: 25px;
 }
+
 .pop-description {
+  white-space: pre-line;  
+  vertical-align: bottom;
+}
+
+.pop-address{
   white-space: pre-line;  
   vertical-align: bottom;
 }

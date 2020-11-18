@@ -1,5 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect,  useCallback, useRef} from 'react'
 import ReactMapGL, {Marker, Popup} from 'react-map-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import groceryIcon from './images/grocery.svg'
 import greenIcon from './images/green.svg'
 import soupIcon from './images/soup.svg'
@@ -8,23 +10,38 @@ import foodPantryIcon from './images/foodpantry.svg'
 import './App.css';
 import { useForm } from "react-hook-form";
 import * as foodData from "./food-map-data.json"
-import SearchBox from "./SearchBox"
 import CheckboxMenu from './Checkbox'
+import Geocoder from 'react-map-gl-geocoder'
 
-
-function App() {
-
-  const mapStyles = {
-    width: '100vw',
-    height:'100vh',
-  }
-
+const App = () => {
   const [viewport, setViewport] = useState({
     latitude: 40.7127281,
     longitude: -74.0060152,
     zoom: 12.5,
-  })
+  });
 
+  const mapRef = useRef();
+  const handleViewportChange = useCallback(
+    (newViewport) => setViewport(newViewport),
+    []
+  );
+  const handleGeocoderViewportChange = useCallback(
+    (newViewport) => {
+      const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+      return handleViewportChange({
+        ...newViewport,
+        ...geocoderDefaultOverrides
+      });
+    },
+    []
+  );
+
+  const params = {
+    country: "us"
+  }
+
+  //Menu Components
   const [state, setState] = useState({
     free: true,
     $: true,
@@ -51,7 +68,7 @@ function App() {
       FoodPantry: true,
       SoupKitchen: true
     }
-});
+  });
 
   const onSubmit = data => {
     setState({
@@ -67,6 +84,8 @@ function App() {
       SoupKitchen: data.SoupKitchen
     })
   };
+
+  //Markers
 
   const [selectedFood, setSelectedFood] = useState(null)
   
@@ -108,21 +127,30 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <CheckboxMenu
+    <div style={{ height: "100vh" }}>
+      <ReactMapGL
+        ref={mapRef}
+        {...viewport}
+        width="100%"
+        height="100%"
+        onViewportChange={handleViewportChange}
+        mapStyle = "mapbox://styles/arielledom/ckhjzdaiy06z419nugsckawxn"
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+      >
+
+      <CheckboxMenu 
           register = {register} 
           handleSubmit = {handleSubmit} 
           onSubmit = {onSubmit}/>
 
-      <ReactMapGL {...viewport} {...mapStyles}
-        mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
-        mapStyle = "mapbox://styles/arielledom/ckhjzdaiy06z419nugsckawxn"
-        onViewportChange = {(viewport) => {
-        setViewport(viewport)}}>
-      
-        <SearchBox 
-          viewport = {viewport} 
-          setViewport = {setViewport}/>
+
+        <Geocoder
+          mapRef={mapRef}
+          onViewportChange={handleGeocoderViewportChange}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          position="top-right"
+          queryParams={params}
+        />
 
         {foodData.map((food, index) => (
           <Marker
@@ -152,7 +180,7 @@ function App() {
               <br></br>
               <div className = 'pop-description'>{selectedFood.description}</div> 
               <br></br>
-              <div className = 'pop-address'>Location: <a href = {`${selectedFood.map}`}>{selectedFood.address}</a></div>
+              <div className = 'pop-address'>Location: <br></br> <a href = {`${selectedFood.map}`}>{selectedFood.address}</a></div>
               <br></br>
               <div className = 'pop-cost'>Cost: {selectedFood.cost}</div>
             </div>
@@ -161,6 +189,6 @@ function App() {
       </ReactMapGL>
     </div>
   );
-}
+};
 
-export default App;
+export default App
