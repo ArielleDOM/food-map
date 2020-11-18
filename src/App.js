@@ -12,9 +12,10 @@ import CheckboxMenu from './Checkbox'
 
 
 function App() {
+
   const [viewport, setViewport] = useState({
-    latitude:40.7127281,
-    longitude:-74.0060152,
+    latitude: 40.7127281,
+    longitude: -74.0060152,
     width: '100vw',
     height:'100vh',
     zoom: 13,
@@ -62,7 +63,6 @@ function App() {
       SoupKitchen: data.SoupKitchen,})
   };
 
-
   const [selectedFood, setSelectedFood] = useState(null)
   
   useEffect(() => {
@@ -94,54 +94,57 @@ function App() {
   const hideOrShow = (type, cost, status) => {
     status = JSON.parse(status)
     if(state.status && !status) return 'none'
+    if(!state[type]) return "none"
     if(cost === 'FREE' && !state.free) return 'none'
     if(cost === '$' && !state.$) return 'none'
     if(cost === '$$' && !state.$$) return 'none'
     if(cost === '$$$' && !state.$$$) return 'none'
-    if(!state[type]) return "none"
     else return "block"
   }
 
   return (
     <div className="App">
       <ReactMapGL {...viewport} 
-      mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
-      mapStyle = "mapbox://styles/arielledom/ckhjzdaiy06z419nugsckawxn"
-      onViewportChange = {(viewport) => {
+        mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
+        mapStyle = "mapbox://styles/arielledom/ckhjzdaiy06z419nugsckawxn"
+        onViewportChange = {(viewport) => {
         setViewport(viewport)
-      }}
-      >
-        <CheckboxMenu register = {register} handleSubmit = {handleSubmit} onSubmit = {onSubmit}></CheckboxMenu>
+      }}>
+
+        <CheckboxMenu 
+          register = {register} 
+          handleSubmit = {handleSubmit} 
+          onSubmit = {onSubmit}/>
 
         {foodData.map((food, index) => (
           <Marker
-          key = {index}
-          latitude = {getCord(food.location)[0]} 
-          longitude = {getCord(food.location)[1]}>
+            key = {index}
+            latitude = {getCord(food.location)[0]} 
+            longitude = {getCord(food.location)[1]}>
             <button 
               style = {{display: hideOrShow(food.type, food.cost, food.status)}}
               className = "marker-btn" onClick = {e => {
-              e.preventDefault()
-              setSelectedFood(food)
-            }}>
+                e.preventDefault()
+                setSelectedFood(food)
+              }}>
               <img src = {getIcon(food.type)} alt ="Food Icon"/>
             </button>
           </Marker>
         ))}
+
         {selectedFood ? (
           <Popup 
             latitude = {getCord(selectedFood.location)[0]} 
             longitude = {getCord(selectedFood.location)[1]} 
             onClose = {() =>{
               setSelectedFood(null)
-            }}
-          >
+            }}>
             <div className = "pop-container">
               <div className = 'pop-header'>{selectedFood.name}</div>
               <br></br>
               <div className = 'pop-description'>{selectedFood.description}</div> 
               <br></br>
-              <div className = 'pop-address'>Location: {selectedFood.address}</div>
+              <div className = 'pop-address'>Location: <a href = {`${selectedFood.map}`}>{selectedFood.address}</a></div>
               <br></br>
               <div className = 'pop-cost'>Cost: {selectedFood.cost}</div>
             </div>

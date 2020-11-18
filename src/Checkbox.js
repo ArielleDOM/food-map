@@ -1,6 +1,5 @@
 import React from "react";
 // import { useForm } from "react-hook-form";
-import { Checkbox } from '@material-ui/core';
 
 export default function CheckboxMenu(props) {
 
@@ -10,46 +9,56 @@ export default function CheckboxMenu(props) {
   return (
     <div className = 'checkbox-container'>
         <form onSubmit={handleSubmit(onSubmit)} className ='checkbox-form'>
-            <label>
+            <div className = 'check'>
                 <input type = 'checkbox' name ='free' ref={register}/>
-                Free
-            </label>
-            <label>
+                <label className = 'menu'> Free</label >
+            </div>
+
+            <div className = 'check'>
                 <input type = 'checkbox' name ='$' ref={register}/>
-                $ (Inexpensive)
-            </label>
-            <label>
+                <label className = 'menu'> $ (Inexpensive)</label>
+            </div>
+
+            <div className = 'check'>
                 <input type = 'checkbox' name ='$$' ref={register}/>
-                $$ (Moderately expensiv)
-            </label>
-            <label>
+                <label className = 'menu'> $$ (Moderate) </label>
+            </div>
+
+            <div className = 'check'>
                 <input type = 'checkbox' name ='$$$' ref={register}/>
-                $$$ (Expensive)
-            </label>
-            <label>
-                <input type = 'checkbox' name ='status' ref={register}/>
-                In Business
-            </label>
-            <label>
+                <label className = 'menu'> $$$ (Expensive) </label>
+            </div>
+
+            <div className = 'check'>
+                <input type = 'checkbox' name ='status' ref={register}/>  
+                <label className = 'menu'> In Business</label>
+            </div>
+
+            <div className = 'check'>
                 <input type = 'checkbox' name ='Greenmarket' ref={register}/>
-                Greenmarket
-            </label>
-            <label>
+                <label className = 'menu'> Greenmarket</label>
+            </div>
+
+            <div className = 'check'>
                 <input type = 'checkbox' name ='Grocery' ref={register}/>
-                Grocery Store
-            </label>
-            <label>
+                <label className = 'menu'>Grocery Store </label>
+            </div>
+
+            <div className = 'check'>
                 <input type = 'checkbox' name = 'GrabAndGo' ref={register}/>
-                Grab & Go Meals
-            </label>
-            <label>
+                <label className = 'menu'> Grab & Go Meals </label>
+            </div>
+
+            <div className = 'check'>
                 <input type = 'checkbox' name = 'FoodPantry' ref={register}/>
-                Food Pantry
-            </label>
-            <label>
+                <label className = 'menu'> Food Pantry</label>
+            </div>
+
+            <div className = 'check'>
                 <input type = 'checkbox' name ='SoupKitchen' ref={register}/>
-                Soup Kitchen
-            </label>
+                <label className = 'menu'>Soup Kitchen</label>
+            </div>
+
         <button type="submit">Submit</button>
         </form>
     </div>

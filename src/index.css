@@ -28,10 +28,9 @@ code {
 }
 
 .checkbox-container{
+  padding: 10px;
   background-color: white;
-}
-
-.checkbox-form > label{
-  display: flex;
-  flex-direction: column;
+  width: 150px;
+  height: auto;
+  text-align: left;
 }
