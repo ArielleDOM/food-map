@@ -57,7 +57,7 @@ export default function CheckboxMenu(props) {
                 <input type = 'checkbox' name ='SoupKitchen' ref={register}/>
                 <label className = 'menu'>Soup Kitchen</label>
             </div>
-
+            <br></br>
         <button type="submit">Submit</button>
         </form>
         

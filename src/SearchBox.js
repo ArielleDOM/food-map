@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React, {useRef} from 'react'
 import Geocoder from 'react-mapbox-gl-geocoder'
 import './App.css';
 
@@ -19,15 +18,18 @@ export default function SearchBox (props){
         })
     }
 
+    const mapRef = useRef()
+
     return (
         <div className = "searchBox-container">
             <Geocoder
+                mapRef = {mapRef}
               className = "searchBox"
               mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
               onSelected={onSelected}
               viewport={viewport}
               hideOnSelect={true}
-              value=""
+              value = ''
               queryParams={params}
             />
         </div>

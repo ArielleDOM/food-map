@@ -109,6 +109,11 @@ function App() {
 
   return (
     <div className="App">
+      <CheckboxMenu
+          register = {register} 
+          handleSubmit = {handleSubmit} 
+          onSubmit = {onSubmit}/>
+
       <ReactMapGL {...viewport} {...mapStyles}
         mapboxApiAccessToken = {process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle = "mapbox://styles/arielledom/ckhjzdaiy06z419nugsckawxn"
@@ -118,12 +123,6 @@ function App() {
         <SearchBox 
           viewport = {viewport} 
           setViewport = {setViewport}/>
-
-        <CheckboxMenu 
-          register = {register} 
-          handleSubmit = {handleSubmit} 
-          onSubmit = {onSubmit}/>
-
 
         {foodData.map((food, index) => (
           <Marker

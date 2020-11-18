@@ -34,3 +34,8 @@ code {
   height: auto;
   text-align: left;
 }
+
+.searchBox-container{
+  padding: 10px;
+  background-color: white;
+}
