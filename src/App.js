@@ -14,6 +14,8 @@ import CheckboxMenu from './Checkbox'
 import Geocoder from 'react-map-gl-geocoder'
 
 const App = () => {
+
+  //Setting up viewport and geocoder
   const [viewport, setViewport] = useState({
     latitude: 40.7127281,
     longitude: -74.0060152,
@@ -21,10 +23,12 @@ const App = () => {
   });
 
   const mapRef = useRef();
+
   const handleViewportChange = useCallback(
     (newViewport) => setViewport(newViewport),
     []
   );
+  
   const handleGeocoderViewportChange = useCallback(
     (newViewport) => {
       const geocoderDefaultOverrides = { transitionDuration: 1000 };
@@ -86,7 +90,6 @@ const App = () => {
   };
 
   //Markers
-
   const [selectedFood, setSelectedFood] = useState(null)
   
   useEffect(() => {
@@ -143,12 +146,12 @@ const App = () => {
           handleSubmit = {handleSubmit} 
           onSubmit = {onSubmit}/>
 
-
         <Geocoder
           mapRef={mapRef}
           onViewportChange={handleGeocoderViewportChange}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           position="top-right"
+          hideOnSelect={true}
           queryParams={params}
         />
 
@@ -171,18 +174,18 @@ const App = () => {
         {selectedFood ? (
           <Popup 
             latitude = {getCord(selectedFood.location)[0]} 
-            longitude = {getCord(selectedFood.location)[1]} 
-            onClose = {() =>{
-              setSelectedFood(null)
-            }}>
+            longitude = {getCord(selectedFood.location)[1]}
+            closeOnClick={false} 
+            onClose = {()=> setSelectedFood(null)}
+            >
             <div className = "pop-container">
-              <div className = 'pop-header'>{selectedFood.name}</div>
+            <div className = 'pop-header'>{selectedFood.name}</div>
               <br></br>
-              <div className = 'pop-description'>{selectedFood.description}</div> 
+            <div className = 'pop-description'>{selectedFood.description}</div> 
               <br></br>
-              <div className = 'pop-address'>Location: <br></br> <a href = {`${selectedFood.map}`}>{selectedFood.address}</a></div>
+            <div className = 'pop-address'>Location: <br></br> <a href = {`${selectedFood.map}`} target="_blank" >{selectedFood.address}</a></div>
               <br></br>
-              <div className = 'pop-cost'>Cost: {selectedFood.cost}</div>
+            <div className = 'pop-cost'>Cost: {selectedFood.cost}</div>
             </div>
           </Popup>
         ) : null}

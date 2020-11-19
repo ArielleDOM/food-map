@@ -35,7 +35,7 @@ export default function CheckboxMenu(props) {
 
             <div className = 'check'>
                 <input type = 'checkbox' name ='Greenmarket' ref={register}/>
-                <label className = 'menu'> Greenmarket</label>
+                <label className = 'menu'> Greenmarket </label>
             </div>
 
             <div className = 'check'>

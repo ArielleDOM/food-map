@@ -41,6 +41,16 @@ code {
   text-align: left;
 }
 
+.pop-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.pop-header{
+  font-weight: bold;
+  font-size: large;
+}
+
 .searchBox-container{
   padding: 10px;
   background-color: white;
