@@ -55,3 +55,8 @@ code {
   padding: 10px;
   background-color: white;
 }
+
+.geocode-group{
+  display: flex;
+  flex-direction: row;
+}

@@ -1,5 +1,5 @@
 import React, {useState, useEffect,  useCallback, useRef} from 'react'
-import ReactMapGL, {Marker, Popup} from 'react-map-gl'
+import ReactMapGL, {Marker, Popup, GeolocateControl} from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import groceryIcon from './images/grocery.svg'
@@ -32,7 +32,6 @@ const App = () => {
   const handleGeocoderViewportChange = useCallback(
     (newViewport) => {
       const geocoderDefaultOverrides = { transitionDuration: 1000 };
-
       return handleViewportChange({
         ...newViewport,
         ...geocoderDefaultOverrides
@@ -44,6 +43,12 @@ const App = () => {
   const params = {
     country: "us"
   }
+
+  const geolocateStyle = {
+    float: 'left',
+    margin: '10px',
+    padding: '8px'
+  };
 
   //Menu Components
   const [state, setState] = useState({
@@ -141,19 +146,28 @@ const App = () => {
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       >
 
+         
+
       <CheckboxMenu 
           register = {register} 
           handleSubmit = {handleSubmit} 
           onSubmit = {onSubmit}/>
 
-        <Geocoder
-          mapRef={mapRef}
-          onViewportChange={handleGeocoderViewportChange}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          position="top-right"
-          hideOnSelect={true}
-          queryParams={params}
-        />
+  
+            <GeolocateControl
+              style = {geolocateStyle}
+              positionOptions={{ enableHighAccuracy: true }}
+              trackUserLocation={true}
+            /> 
+            
+            <Geocoder
+              mapRef={mapRef}
+              onViewportChange={handleGeocoderViewportChange}
+              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+              position="top-right"
+              hideOnSelect={true}
+              queryParams={params}
+            />
 
         {foodData.map((food, index) => (
           <Marker
