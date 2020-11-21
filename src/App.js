@@ -11,7 +11,10 @@ import './App.css';
 import { useForm } from "react-hook-form";
 import * as foodData from "./food-map-data.json"
 import CheckboxMenu from './Checkbox'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 import Geocoder from 'react-map-gl-geocoder'
+import NavBar from './NavBar'
 
 const App = () => {
 
@@ -52,7 +55,7 @@ const App = () => {
 
   const geolocateStyle = {
     float: 'left',
-    margin: '15px',
+    margin: '8px',
     padding: '8px'
   };
 
@@ -142,6 +145,7 @@ const App = () => {
 
   return (
     <div style={{ height: "100vh" }}>
+      <NavBar/>
       <ReactMapGL
         ref={mapRef}
         {...viewport}
@@ -152,23 +156,27 @@ const App = () => {
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       >
 
-         
-
       <CheckboxMenu 
           register = {register} 
           handleSubmit = {handleSubmit} 
           onSubmit = {onSubmit}/>
 
-  
-            <GeolocateControl
-              style = {geolocateStyle}
-              positionOptions={{ enableHighAccuracy: true }}
-              trackUserLocation={true}
-            /> 
+          <div className = "controls-container">
 
-          <div style={{position: 'absolute', left: 0}}>
-            <NavigationControl />
-         </div>
+            <div className = 'zoom-control'>
+              <NavigationControl />
+            </div>
+
+            <div className = "geolocate-control">
+              <GeolocateControl
+                style = {geolocateStyle}
+                positionOptions={{ enableHighAccuracy: true }}
+                trackUserLocation={true}
+              /> 
+              {/* <button style = {geolocateStyle}>🏠</button> */}
+            </div>
+
+          </div>
 
             
             <Geocoder
