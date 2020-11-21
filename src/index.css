@@ -35,7 +35,8 @@ code {
 
 .checkbox-container{
   padding: 10px;
-  background-color: white;
+  margin: 1em;
+  background-color: rgb(221, 206, 138);
   width: 150px;
   height: auto;
   text-align: left;
@@ -85,10 +86,6 @@ code {
   .info-icon{
     width: 25px;
     height: 25px;
-  }
-
-  .info-icon :hover{
-    color: burlywood;
   }
 
 
