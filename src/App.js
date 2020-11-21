@@ -1,5 +1,5 @@
 import React, {useState, useEffect,  useCallback, useRef} from 'react'
-import ReactMapGL, {Marker, Popup, GeolocateControl} from 'react-map-gl'
+import ReactMapGL, {Marker, Popup, GeolocateControl, NavigationControl} from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import groceryIcon from './images/grocery.svg'
@@ -16,10 +16,16 @@ import Geocoder from 'react-map-gl-geocoder'
 const App = () => {
 
   //Setting up viewport and geocoder
+  const homeCord = {
+    latitude: 40.7128, //40.7127281
+    longitude: -74.0060152, //74.0060
+    zoom: 11,
+  }
+
   const [viewport, setViewport] = useState({
-    latitude: 40.7127281,
-    longitude: -74.0060152,
-    zoom: 12.5,
+    latitude: homeCord.latitude,
+    longitude: homeCord.longitude,
+    zoom: homeCord.zoom,
   });
 
   const mapRef = useRef();
@@ -46,7 +52,7 @@ const App = () => {
 
   const geolocateStyle = {
     float: 'left',
-    margin: '10px',
+    margin: '15px',
     padding: '8px'
   };
 
@@ -159,6 +165,11 @@ const App = () => {
               positionOptions={{ enableHighAccuracy: true }}
               trackUserLocation={true}
             /> 
+
+          <div style={{position: 'absolute', left: 0}}>
+            <NavigationControl />
+         </div>
+
             
             <Geocoder
               mapRef={mapRef}
@@ -186,7 +197,7 @@ const App = () => {
         ))}
 
         {selectedFood ? (
-          <Popup 
+          <Popup
             latitude = {getCord(selectedFood.location)[0]} 
             longitude = {getCord(selectedFood.location)[1]}
             closeOnClick={false} 
