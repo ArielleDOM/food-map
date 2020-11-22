@@ -1,20 +1,18 @@
 import React, {useState, useEffect,  useCallback, useRef} from 'react'
-import ReactMapGL, {Marker, Popup, GeolocateControl, NavigationControl} from 'react-map-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
-import groceryIcon from './images/grocery.svg'
-import greenIcon from './images/green.svg'
-import soupIcon from './images/soup.svg'
-import grabIcon from './images/grab.svg'
-import foodPantryIcon from './images/foodpantry.svg'
-import './App.css';
+import ReactMapGL from 'react-map-gl'
+import Geocoder from 'react-map-gl-geocoder'
 import { useForm } from "react-hook-form";
 import * as foodData from "./food-map-data.json"
 import CheckboxMenu from './Checkbox'
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
-import Geocoder from 'react-map-gl-geocoder'
 import NavBar from './NavBar'
+import PopCard from './PopCard'
+import MapControls from './MapControls'
+import MarkerCard from './MarkerCard'
+
+import './App.css';
+import 'react-dropdown/style.css';
+import 'mapbox-gl/dist/mapbox-gl.css'
+import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 
 const App = () => {
 
@@ -52,12 +50,6 @@ const App = () => {
   const params = {
     country: "us"
   }
-
-  const geolocateStyle = {
-    float: 'left',
-    margin: '8px',
-    padding: '8px'
-  };
 
   //Menu Components
   const [state, setState] = useState({
@@ -122,27 +114,6 @@ const App = () => {
     return JSON.parse(str)
   }
 
-  const getIcon = (type) => {
-    let icon;
-    if(type === "Grocery") icon = groceryIcon
-    if(type === "GrabAndGo") icon = grabIcon
-    if(type === "Greenmarket") icon = greenIcon
-    if(type === "SoupKitchen") icon = soupIcon
-    if(type === "FoodPantry") icon = foodPantryIcon
-    return icon
-  }
-
-  const hideOrShow = (type, cost, status) => {
-    status = JSON.parse(status)
-    if(state.status && !status) return 'none'
-    if(!state[type]) return "none"
-    if(cost === 'FREE' && !state.free) return 'none'
-    if(cost === '$' && !state.$) return 'none'
-    if(cost === '$$' && !state.$$) return 'none'
-    if(cost === '$$$' && !state.$$$) return 'none'
-    else return "block"
-  }
-
   return (
     <div style={{ height: "100vh" }}>
       <NavBar/>
@@ -156,71 +127,38 @@ const App = () => {
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       >
 
-      <CheckboxMenu 
+        <CheckboxMenu 
           register = {register} 
           handleSubmit = {handleSubmit} 
           onSubmit = {onSubmit}/>
 
-          <div className = "controls-container">
+        <MapControls/>
 
-            <div className = 'zoom-control'>
-              <NavigationControl />
-            </div>
-
-            <div className = "geolocate-control">
-              <GeolocateControl
-                style = {geolocateStyle}
-                positionOptions={{ enableHighAccuracy: true }}
-                trackUserLocation={true}
-              /> 
-              {/* <button style = {geolocateStyle}>🏠</button> */}
-            </div>
-
-          </div>
-
-            
-            <Geocoder
-              mapRef={mapRef}
-              onViewportChange={handleGeocoderViewportChange}
-              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-              position="top-right"
-              hideOnSelect={true}
-              queryParams={params}
-            />
+        <Geocoder
+          mapRef={mapRef}
+          onViewportChange={handleGeocoderViewportChange}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          position="top-right"
+          hideOnSelect={true}
+          queryParams={params}
+        />
 
         {foodData.map((food, index) => (
-          <Marker
+          <MarkerCard 
             key = {index}
-            latitude = {getCord(food.location)[0]} 
-            longitude = {getCord(food.location)[1]}>
-            <button 
-              style = {{display: hideOrShow(food.type, food.cost, food.status)}}
-              className = "marker-btn" onClick = {e => {
-                e.preventDefault()
-                setSelectedFood(food)
-              }}>
-              <img src = {getIcon(food.type)} alt ="Food Icon"/>
-            </button>
-          </Marker>
+            food = {food}
+            setSelectedFood = {setSelectedFood}
+            getCord = {getCord}
+            state = {state}
+          />
         ))}
 
         {selectedFood ? (
-          <Popup
-            latitude = {getCord(selectedFood.location)[0]} 
-            longitude = {getCord(selectedFood.location)[1]}
-            closeOnClick={false} 
-            onClose = {()=> setSelectedFood(null)}
-            >
-            <div className = "pop-container">
-            <div className = 'pop-header'>{selectedFood.name}</div>
-              <br></br>
-            <div className = 'pop-description'>{selectedFood.description}</div> 
-              <br></br>
-            <div className = 'pop-address'>Location: <br></br> <a href = {`${selectedFood.map}`} target="_blank" >{selectedFood.address}</a></div>
-              <br></br>
-            <div className = 'pop-cost'>Cost: {selectedFood.cost}</div>
-            </div>
-          </Popup>
+          <PopCard 
+            getCord = {getCord} 
+            setSelectedFood ={setSelectedFood} 
+            selectedFood = {selectedFood}
+          />
         ) : null}
       </ReactMapGL>
     </div>
