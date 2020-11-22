@@ -17,16 +17,10 @@ import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 const App = () => {
 
   //Setting up viewport and geocoder
-  const homeCord = {
-    latitude: 40.7128, //40.7127281
-    longitude: -74.0060152, //74.0060
-    zoom: 11,
-  }
-
   const [viewport, setViewport] = useState({
-    latitude: homeCord.latitude,
-    longitude: homeCord.longitude,
-    zoom: homeCord.zoom,
+    latitude: 40.7128,
+    longitude: -74.0060152,
+    zoom: 11,
   });
 
   const mapRef = useRef();
@@ -132,7 +126,7 @@ const App = () => {
           handleSubmit = {handleSubmit} 
           onSubmit = {onSubmit}/>
 
-        <MapControls/>
+        <MapControls setViewport = {setViewport}/>
 
         <Geocoder
           mapRef={mapRef}
@@ -160,6 +154,7 @@ const App = () => {
             selectedFood = {selectedFood}
           />
         ) : null}
+
       </ReactMapGL>
     </div>
   );
