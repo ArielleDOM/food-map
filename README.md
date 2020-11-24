@@ -10,7 +10,7 @@ I created Find Food NYC because I found the official [Get Food NYC Map](https:/
 Also, [Get Food NYC Map](https://nyc-oem.maps.arcgis.com/apps/webappviewer/index.html?id=d781ef8a46cf417dbbfaf28f3b902ac4) did not have a public API, so I used a script that turns Excel .csv file into JSON.
 
 Currently the app:
-*Filters markers
+* Filters markers
 * Has a link to Google Map Location
 
 In the future, I want to add:
