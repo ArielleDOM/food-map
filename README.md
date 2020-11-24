@@ -15,7 +15,7 @@ Currently the app:
 
 In the future, I want to add:
 * Find near me tool
-*Fix Bugs
+* Fix Bugs
   * Markers are on top of the Filter Menu and Reset Map Button
 
 ## TechnologiesFind 
