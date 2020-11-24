@@ -15,7 +15,7 @@ export default function PopCard(props){
               <br></br>
             <div className = 'pop-description'>{selectedFood.description}</div> 
               <br></br>
-            <div className = 'pop-address'>Location: <br></br> <a href = {`${selectedFood.map}`} target="_blank" >{selectedFood.address}</a></div>
+            <div className = 'pop-address'>Location: <br></br> <a href = {`${selectedFood.map}`} target="_blank" rel="noopener noreferrer">{selectedFood.address}</a></div>
               <br></br>
             <div className = 'pop-cost'>Cost: {selectedFood.cost}</div>
             </div>
