@@ -18,5 +18,5 @@ In the future, I want to add:
 * Fix Bugs
   * Markers are on top of the Filter Menu and Reset Map Button
 
-## TechnologiesFind 
+## Technologies
 Find Food NYC used React, React Map GL, and Mapbox
