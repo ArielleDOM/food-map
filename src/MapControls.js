@@ -25,7 +25,7 @@ export default function MapControls(props){
             <div className = 'zoom-control'>
                 <NavigationControl mapRef = {mapRef}/>
             </div>
-            
+
             <div className = "geolocate-control">
                 <GeolocateControl
                 style = {geolocateStyle}

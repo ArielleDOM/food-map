@@ -48,7 +48,6 @@ const App = () => {
 
   //Menu Components
   const [state, setState] = useState({
-    revealFilter: true,
     free: true,
     $: true,
     $$: true,
@@ -59,6 +58,7 @@ const App = () => {
     GrabAndGo: true,
     FoodPantry: true,
     SoupKitchen: true,
+    closeInfoBar: false
   })
 
   const { register, handleSubmit } = useForm({
@@ -78,7 +78,6 @@ const App = () => {
 
   const onSubmit = data => {
     setState({
-      revealFilter: true,
       free: data.free,
       $: data.$,
       $$: data.$$,
@@ -113,7 +112,7 @@ const App = () => {
 
   return (
     <div className = 'app' style={{ height: "100vh" }}>
-      <NavBar/>
+      <NavBar state = {state} setState = {setState}/>
 
       <ReactMapGL
         ref={mapRef}
@@ -124,13 +123,6 @@ const App = () => {
         mapStyle = "mapbox://styles/arielledom/ckhjzdaiy06z419nugsckawxn"
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
       >
-
-        <CheckboxMenu 
-          state = {state}
-          setState = {setState}
-          register = {register} 
-          handleSubmit = {handleSubmit} 
-          onSubmit = {onSubmit}/>
 
         {foodData.map((food, index) => (
           <MarkerCard 
@@ -150,20 +142,38 @@ const App = () => {
           />
         ) : null}
 
+        <div className = 'left-side'>
+          <MapControls setViewport = {setViewport} 
+            handleViewportChange = {handleViewportChange}
+            mapRef = {mapRef}
+          />
 
-        <MapControls setViewport = {setViewport} 
-          handleViewportChange = {handleViewportChange}
-          mapRef = {mapRef}
-        />
+           <CheckboxMenu
+          setState = {setState}
+          register = {register} 
+          handleSubmit = {handleSubmit} 
+          onSubmit = {onSubmit}/>
+        </div>
 
-        <Geocoder
-          mapRef={mapRef}
-          onViewportChange={handleGeocoderViewportChange}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          position="top-right"
-          hideOnSelect={true}
-          queryParams={params}
-        />
+        <InfoWindow state = {state} setState = {setState}/>
+
+          <Geocoder
+            mapRef={mapRef}
+            onViewportChange={handleGeocoderViewportChange}
+            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+            position= "top-right"
+            hideOnSelect={true}
+            queryParams={params}
+          >
+
+          <InfoWindow state = {state}
+          setState = {setState}
+          register = {register} 
+          handleSubmit = {handleSubmit} 
+          onSubmit = {onSubmit}/>
+
+          </Geocoder>
+
 
       </ReactMapGL>
     </div>

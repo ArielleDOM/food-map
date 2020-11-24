@@ -1,21 +1,31 @@
-import React from "react";
-import groceryIcon from './images/grocery.svg'
-import greenIcon from './images/green.svg'
-import soupIcon from './images/soup.svg'
-import grabIcon from './images/grab.svg'
-import foodPantryIcon from './images/foodpantry.svg'
-import { FaAngleDoubleDown,  FaAngleDoubleUp} from 'react-icons/fa'
+import React, {useState} from "react";
+import { FaAngleDoubleDown,  FaAngleDoubleUp, FaWindowClose} from 'react-icons/fa'
 
 export default function InfoWindow(props) {
 
-    const {register, handleSubmit, onSubmit, state, setState} = props
+    const {state, setState} = props
+
+    const [arrow, setArrow] = useState({
+        revealInfo: false
+    })
 
     const UpAndDown = () => {
-        if(state.revealFilter) return 'block'
+        if(arrow.revealInfo) return 'block'
         else return 'none'
     }
 
-    const changeArrowState = () =>{
+    const closeInfoBar = () => {
+        if(state.closeInfoBar) return 'block'
+        else return 'none'
+    }
+
+    const changeInfoArrowState = () =>{
+            setArrow({
+            revealInfo: !arrow.revealInfo
+        })
+    }
+
+    const changeInfoBarState = () =>{
         setState({
             free: state.free,
             $: state.$,
@@ -27,83 +37,48 @@ export default function InfoWindow(props) {
             GrabAndGo: state.GrabAndGo,
             FoodPantry: state.FoodPantry,
             SoupKitchen: state.SoupKitchen,
-            revealFilter: !state.revealFilter
+            closeInfoBar: false
         })
     }
 
   return (
-    <div className = "checkbox">
-        <div className = "checkbox-navbar-container">
-            <div className="checkbox-navbar">
-                <h4>Filter</h4>
-                <div onClick = {changeArrowState}>
-                    {state.revealFilter ? <FaAngleDoubleUp/> : <FaAngleDoubleDown/>}
+    <div className = "info-window" style = {{display : closeInfoBar()}}>
+        <div className = 'info-window-container' style = {{display : UpAndDown()}}>
+            <p>
+                Welcome!
+                <br></br>
+                <br></br>
+                Use this map to find locations that offer free food (food pantries and Grab & Go meals at NYC schools), as well as grocery stores and farmers' markets.
+                <br></br>
+                <br></br>
+                Grab & Go Meals (NYC Schools)
+                <br></br>
+                Pantry/Mobile Food Pantry
+                <br></br>
+                Soup Kitchen/Mobile Soup Kitchen
+                <br></br>
+                Greenmarket/Farm stand/Fresh Food box
+                <br></br>
+                Grocery Store
+                <br></br>
+                <br></br>
+                Grab & Go sites are updated daily and Food Pantry and Soup Kitchen Sites are updated weekly.
+                <br></br>
+                <br></br>
+                Hours and locations on this map are subject to change. It is possible additional food locations are open but not featured on this map.
+            </p>
+        </div>
+        <div className = "info-navbar-container">
+            <div className="info-navbar">
+                <h4>Find Food NYC Information</h4>
+                <div onClick = {changeInfoArrowState}>
+                    {arrow.revealInfo ? <FaAngleDoubleDown/> : <FaAngleDoubleUp/>}
+                </div>
+
+                <div className = "info-window-close-bttn" onClick = {changeInfoBarState}>
+                    <FaWindowClose opacity = "0.5"/>
                 </div>
             </div>
-        </div>
-
-        <div className = 'checkbox-input-container' style = {{display : UpAndDown()}}>
-        <form onSubmit={handleSubmit(onSubmit)} className ='checkbox-form'>
-            <div className = 'check'>
-                <input type = 'checkbox' name ='free' ref={register}/>
-                <label className = 'menu'> Free</label >
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name ='$' ref={register}/>
-                <label className = 'menu'> $ (Inexpensive)</label>
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name ='$$' ref={register}/>
-                <label className = 'menu'> $$ (Moderate) </label>
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name ='$$$' ref={register}/>
-                <label className = 'menu'> $$$ (Expensive) </label>
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name ='status' ref={register}/>  
-                <label className = 'menu'> In Business</label>
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name ='Greenmarket' ref={register}/>
-                <label className = 'menu'> Greenmarket </label>
-                <img src = {greenIcon} alt ="Food Icon"/>
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name ='Grocery' ref={register}/>
-                <label className = 'menu'>Grocery Store </label>
-                <img src = {groceryIcon} alt ="Food Icon"/>
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name = 'GrabAndGo' ref={register}/>
-                <label className = 'menu'> Grab & Go Meals </label>
-                <img src = {grabIcon} alt ="Food Icon"/>
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name = 'FoodPantry' ref={register}/>
-                <label className = 'menu'> Food Pantry</label>
-                <img src = {foodPantryIcon} alt ="Food Icon"/>
-            </div>
-
-            <div className = 'check'>
-                <input type = 'checkbox' name ='SoupKitchen' ref={register}/>
-                <label className = 'menu'>Soup Kitchen</label>
-                <img src = {soupIcon} alt ="Food Icon"/>
-            </div>
-            
-            <div className= 'check-submit'>
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-        
         </div>
     </div>
   );

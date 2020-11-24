@@ -1,7 +1,24 @@
 import React from 'react'
 import { BsFillInfoCircleFill } from "react-icons/bs"
 
-export default function NavBar() {
+export default function NavBar(props) {
+    const {state, setState} = props
+
+    const changeInfoBarState = () =>{
+        setState({
+            free: state.free,
+            $: state.$,
+            $$: state.$$,
+            $$$: state.$$$,
+            status: state.status,
+            Greenmarket: state.Greenmarket,
+            Grocery: state.Grocery,
+            GrabAndGo: state.GrabAndGo,
+            FoodPantry: state.FoodPantry,
+            SoupKitchen: state.SoupKitchen,
+            closeInfoBar: !state.closeInfoBar
+        })
+    }
 
     return (
         <div className="navbar">
@@ -13,7 +30,7 @@ export default function NavBar() {
         </div>
 
         <div className = 'info-icon'>
-           <BsFillInfoCircleFill size={25} opacity = '0.5'/>
+           <BsFillInfoCircleFill onClick = {changeInfoBarState} size={25} opacity = '0.5'/>
         </div>
 
         </div>

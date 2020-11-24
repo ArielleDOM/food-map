@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import groceryIcon from './images/grocery.svg'
 import greenIcon from './images/green.svg'
 import soupIcon from './images/soup.svg'
@@ -8,7 +8,11 @@ import { FaAngleDoubleDown,  FaAngleDoubleUp} from 'react-icons/fa'
 
 export default function CheckboxMenu(props) {
 
-    const {register, handleSubmit, onSubmit, state, setState} = props
+    const {register, handleSubmit, onSubmit} = props
+
+    const [state, setState] = useState({
+        revealFilter: true
+    })
 
     const UpAndDown = () => {
         if(state.revealFilter) return 'block'
@@ -17,16 +21,6 @@ export default function CheckboxMenu(props) {
 
     const changeArrowState = () =>{
         setState({
-            free: state.free,
-            $: state.$,
-            $$: state.$$,
-            $$$: state.$$$,
-            status: state.status,
-            Greenmarket: state.Greenmarket,
-            Grocery: state.Grocery,
-            GrabAndGo: state.GrabAndGo,
-            FoodPantry: state.FoodPantry,
-            SoupKitchen: state.SoupKitchen,
             revealFilter: !state.revealFilter
         })
     }
