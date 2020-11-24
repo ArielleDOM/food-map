@@ -68,10 +68,10 @@ export default function InfoWindow(props) {
                 Hours and locations on this map are subject to change. It is possible additional food locations are open but not featured on this map.
             </p>
         </div>
-        <div className = "info-navbar-container">
+        <div className = "info-navbar-container" onClick = {changeInfoArrowState}>
             <div className="info-navbar">
                 <h4>Find Food NYC Information</h4>
-                <div onClick = {changeInfoArrowState}>
+                <div>
                     {arrow.revealInfo ? <FaAngleDoubleDown/> : <FaAngleDoubleUp/>}
                 </div>
 
