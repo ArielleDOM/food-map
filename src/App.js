@@ -8,6 +8,7 @@ import NavBar from './NavBar'
 import PopCard from './PopCard'
 import MapControls from './MapControls'
 import MarkerCard from './MarkerCard'
+import InfoWindow from './InfoWindow'
 
 import './App.css';
 import 'react-dropdown/style.css';
@@ -47,6 +48,7 @@ const App = () => {
 
   //Menu Components
   const [state, setState] = useState({
+    revealFilter: true,
     free: true,
     $: true,
     $$: true,
@@ -76,6 +78,7 @@ const App = () => {
 
   const onSubmit = data => {
     setState({
+      revealFilter: true,
       free: data.free,
       $: data.$,
       $$: data.$$,
@@ -109,8 +112,9 @@ const App = () => {
   }
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div className = 'app' style={{ height: "100vh" }}>
       <NavBar/>
+
       <ReactMapGL
         ref={mapRef}
         {...viewport}
@@ -122,20 +126,11 @@ const App = () => {
       >
 
         <CheckboxMenu 
+          state = {state}
+          setState = {setState}
           register = {register} 
           handleSubmit = {handleSubmit} 
           onSubmit = {onSubmit}/>
-
-        <MapControls setViewport = {setViewport}/>
-
-        <Geocoder
-          mapRef={mapRef}
-          onViewportChange={handleGeocoderViewportChange}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          position="top-right"
-          hideOnSelect={true}
-          queryParams={params}
-        />
 
         {foodData.map((food, index) => (
           <MarkerCard 
@@ -154,6 +149,21 @@ const App = () => {
             selectedFood = {selectedFood}
           />
         ) : null}
+
+
+        <MapControls setViewport = {setViewport} 
+          handleViewportChange = {handleViewportChange}
+          mapRef = {mapRef}
+        />
+
+        <Geocoder
+          mapRef={mapRef}
+          onViewportChange={handleGeocoderViewportChange}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+          position="top-right"
+          hideOnSelect={true}
+          queryParams={params}
+        />
 
       </ReactMapGL>
     </div>

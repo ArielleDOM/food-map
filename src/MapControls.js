@@ -1,8 +1,9 @@
-import React from 'react'
+import React  from 'react'
 import {GeolocateControl, NavigationControl} from 'react-map-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
 export default function MapControls(props){
-    const {setViewport} = props
+    const {setViewport, mapRef} = props
 
     const geolocateStyle = {
         float: 'left',
@@ -22,16 +23,18 @@ export default function MapControls(props){
     return(
         <div className = "controls-container">
             <div className = 'zoom-control'>
-                <NavigationControl />
+                <NavigationControl mapRef = {mapRef}/>
             </div>
-
+            
             <div className = "geolocate-control">
                 <GeolocateControl
                 style = {geolocateStyle}
                 positionOptions={{ enableHighAccuracy: true }}
                 trackUserLocation={true}
-                /> 
-                <button className = 'home-bttn' onClick = {resetMap}>RESET MAP</button>
+                ></GeolocateControl>
+                <button className = 'home-bttn' 
+                    onClick = {resetMap}>RESET MAP
+                </button>
             </div>
 
             

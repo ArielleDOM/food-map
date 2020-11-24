@@ -1,5 +1,5 @@
 import React from 'react'
-import infoIcon from './images/info-icon.svg'
+import { BsFillInfoCircleFill } from "react-icons/bs"
 
 export default function NavBar() {
 
@@ -13,7 +13,7 @@ export default function NavBar() {
         </div>
 
         <div className = 'info-icon'>
-            <img src = {infoIcon} alt = 'Info Icon'/>
+           <BsFillInfoCircleFill size={25} opacity = '0.5'/>
         </div>
 
         </div>

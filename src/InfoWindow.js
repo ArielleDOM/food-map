@@ -6,7 +6,7 @@ import grabIcon from './images/grab.svg'
 import foodPantryIcon from './images/foodpantry.svg'
 import { FaAngleDoubleDown,  FaAngleDoubleUp} from 'react-icons/fa'
 
-export default function CheckboxMenu(props) {
+export default function InfoWindow(props) {
 
     const {register, handleSubmit, onSubmit, state, setState} = props
 

@@ -5,6 +5,7 @@ import greenIcon from './images/green.svg'
 import soupIcon from './images/soup.svg'
 import grabIcon from './images/grab.svg'
 import foodPantryIcon from './images/foodpantry.svg'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
 export default function MarkerCard(props){
     const {food, setSelectedFood, getCord, state} = props
