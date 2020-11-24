@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "f59c1f93f073a312a489",
+    "revision": "4e4ffea5f368ee3e626c",
     "url": "/food-map/static/css/main.38a48371.chunk.css"
   },
   {
-    "revision": "f59c1f93f073a312a489",
-    "url": "/food-map/static/js/main.29ce3827.chunk.js"
+    "revision": "4e4ffea5f368ee3e626c",
+    "url": "/food-map/static/js/main.7e5315e7.chunk.js"
   },
   {
     "revision": "530bb26e3ea72d9e12a7",
@@ -44,7 +44,7 @@ self.__precacheManifest = [
     "url": "/food-map/static/media/foodpantry.99f1dd75.svg"
   },
   {
-    "revision": "b74d625d85b6b60d39919998eea12512",
+    "revision": "7c18fab40bd0db4ab5e88c1d9b1c52b3",
     "url": "/food-map/index.html"
   }
 ];
