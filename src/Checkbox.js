@@ -27,7 +27,7 @@ export default function CheckboxMenu(props) {
 
   return (
     <div className = "checkbox">
-        <div className = "checkbox-navbar-container">
+        <div className = "checkbox-navbar-container" onClick = {changeArrowState}>
             <div className="checkbox-navbar">
                 <h4>Filter</h4>
                 <div onClick = {changeArrowState}>
