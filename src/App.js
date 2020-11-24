@@ -163,15 +163,7 @@ const App = () => {
             position= "top-right"
             hideOnSelect={true}
             queryParams={params}
-          >
-
-          <InfoWindow state = {state}
-          setState = {setState}
-          register = {register} 
-          handleSubmit = {handleSubmit} 
-          onSubmit = {onSubmit}/>
-
-          </Geocoder>
+          />
 
 
       </ReactMapGL>
