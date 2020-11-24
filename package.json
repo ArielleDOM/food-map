@@ -23,7 +23,7 @@
     "react-map-gl-geocoder": "^2.1.6",
     "react-mapbox-gl-geocoder": "^1.1.0",
     "react-places-autocomplete": "^7.3.0",
-    "react-scripts": "1.1.4",
+    "react-scripts": "2.1.8",
     "react-select-box": "^3.0.1",
     "semantic-ui-react": "^2.0.1",
     "use-places-autocomplete": "^1.6.0",
@@ -41,20 +41,14 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@svgr/cli": "^5.5.0",
     "file-loader": "^6.2.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

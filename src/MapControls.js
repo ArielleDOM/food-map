@@ -1,6 +1,5 @@
 import React  from 'react'
 import {GeolocateControl, NavigationControl} from 'react-map-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
 
 export default function MapControls(props){
     const {setViewport, mapRef} = props

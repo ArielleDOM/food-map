@@ -2,7 +2,7 @@ import React, {useState, useEffect,  useCallback, useRef} from 'react'
 import ReactMapGL from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
 import { useForm } from "react-hook-form";
-import * as foodData from "./food-map-data.json"
+import foodData from "./food-map-data.json"
 import CheckboxMenu from './Checkbox'
 import NavBar from './NavBar'
 import PopCard from './PopCard'
@@ -12,7 +12,6 @@ import InfoWindow from './InfoWindow'
 
 import './App.css';
 import 'react-dropdown/style.css';
-import 'mapbox-gl/dist/mapbox-gl.css'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 
 const App = () => {
